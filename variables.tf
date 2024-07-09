@@ -12,23 +12,20 @@ variable "tfc_network_workspace_name" {
 }
 
 
-
-variable "aws_access_key_id" {
-  description = "AWS AWS_ACCESS_KEY_ID."
-  type        = string
-}
-
-variable "aws_secret_access_key" {
-  description = "AWS AWS_SECRET_ACCESS_KEY."
-  type        = string
-}
-
-variable "aws_session_token" {
-  description = "AWS AWS_SECRET_ACCESS_KEY."
-  type        = string
-}
-
 variable "aws_region" {
   description = "AWS region for all resources."
   type        = string
+  default  = "eu-west-1"
+}
+
+variable "instances_per_subnet" {
+  description = "Number of EC2 instances in each private subnet"
+  type        = number
+  default     = 2
+}
+
+variable "instance_type" {
+  description = "Type of EC2 instance to use"
+  type        = string
+  default     = "t2.micro"
 }
