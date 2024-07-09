@@ -9,6 +9,9 @@ data "terraform_remote_state" "network" {
   }
 }
 
+provider "aws" {
+  region  = data.terraform_remote_state.network.outputs.aws_region
+}
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
