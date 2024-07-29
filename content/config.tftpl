@@ -1,0 +1,13 @@
+
+#!/bin/bash
+
+echo "
+${jsonencode({
+  "var poolData = {
+    UserPoolId: "${UserPoolId}"
+    ClientId: "${ClientId}",
+  };
+}
+)}" > config.js
+
+

@@ -1,0 +1,23 @@
+{
+    "Resources" : {
+      "userFoo": {
+        "Type" : "AWS::Cognito::UserPoolUser",
+        "Properties" : {
+          "UserAttributes" : [
+            { "Name": "email", "Value": "${users_mail}"}
+          ],
+          "Username" : "foo",
+          "UserPoolId" : "${user_pool_id}"
+        }
+      },
+      "groupFooAdmin": {
+        "Type" : "AWS::Cognito::UserPoolUserToGroupAttachment",
+        "Properties" : {
+          "GroupName" : "${user_pool_group_admin}",
+          "Username" : "foo",
+          "UserPoolId" : "${user_pool_id}"
+        },
+        "DependsOn" : "userFoo"
+      }
+    }
+  }

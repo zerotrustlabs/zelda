@@ -1,0 +1,46 @@
+resource "aws_s3_bucket" "static_site_bucket" {
+  bucket = "my-static-site-bucket"  # Replace with your bucket name
+  acl    = "public-read"
+
+  website {
+    index_document = "index.html"
+    error_document = "error.html"
+  }
+}
+
+resource "aws_s3_bucket_object" "index" {
+  bucket = aws_s3_bucket.static_site_bucket.bucket
+  key    = "index.html"
+  source = "path/to/your/index.html"
+  acl    = "public-read"
+}
+
+resource "aws_s3_bucket_object" "error" {
+  bucket = aws_s3_bucket.static_site_bucket.bucket
+  key    = "error.html"
+  source = "path/to/your/error.html"
+  acl    = "public-read"
+}
+
+
+
+
+
+# resource "null_resource" "invalidate_cache" {
+#   triggers = local.file_hashes
+
+#   provisioner "local-exec" {
+#     command = "aws --profile=aws_admin cloudfront create-invalidation --distribution-id=${aws_cloudfront_distribution.my_distribution.id} --paths=/*"
+#   }
+# }
+
+resource "aws_s3_bucket_object" "file" {
+  for_each = local.website_files
+
+  bucket       = aws_s3_bucket.my_static_website.id
+  key          = each.key
+  source       = "${var.website_root}/${each.key}"
+  source_hash  = filemd5("${var.website_root}/${each.key}")
+  acl          = "public-read"
+  content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.key), null)
+}
