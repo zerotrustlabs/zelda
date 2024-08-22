@@ -34,6 +34,6 @@ jobs:
 
     - uses: fugue/regula-action@v3.2.1
       with:
-        input_path: infra_tf/plan.json
+        input_path: ./plan.json
         input_type: tf-plan
         rego_paths: example_custom_rule
