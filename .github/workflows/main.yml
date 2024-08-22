@@ -8,47 +8,9 @@ jobs:
     - uses: actions/checkout@master
     - uses: fugue/regula-action@v3.2.1
       with:
-        input_path: infra_tf
+        input_path: .
         rego_paths: example_custom_rule
 
-  regula_cfn_job:
-    runs-on: ubuntu-latest
-    name: Regula CloudFormation
-    steps:
-    - uses: actions/checkout@master
-    - uses: fugue/regula-action@v3.2.1
-      with:
-        input_path: infra_cfn/cloudformation.yaml
-
-  regula_valid_cfn_job:
-    runs-on: ubuntu-latest
-    name: Regula Valid CloudFormation
-    steps:
-    - uses: actions/checkout@master
-    - uses: fugue/regula-action@v3.2.1
-      with:
-        input_path: infra_valid_cfn/cloudformation.yaml
-
-  regula_multi_cfn_job:
-    runs-on: ubuntu-latest
-    name: Regula multiple CloudFormation templates
-    steps:
-    - uses: actions/checkout@master
-    - uses: fugue/regula-action@v3.2.1
-      with:
-        input_path: '*/cloudformation.yaml'
-
-  regula_input_list_job:
-    runs-on: ubuntu-latest
-    name: Regula on CloudFormation and Terraform
-    steps:
-    - uses: actions/checkout@master
-    - uses: fugue/regula-action@v3.2.1
-      with:
-        input_path: |
-          infra_cfn/cloudformation.yaml
-          infra_valid_cfn/cloudformation.yaml
-          infra_tf
 
   regula_tf_plan_job:
     runs-on: ubuntu-latest
@@ -60,7 +22,6 @@ jobs:
         terraform_wrapper: false
         terraform_version: 1.0.8
     - run: |
-        cd infra_tf
         terraform init
         terraform plan -refresh=false -out="plan.tfplan"
         terraform show -json plan.tfplan > plan.json
