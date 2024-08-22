@@ -1,106 +1,99 @@
+import Amplify, { Auth, API } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
 
-const signUp = () => {
-    event.preventDefault();
-    console.log("signup");
-    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-    const username = document.querySelector("#username").value;
-    const emailadd = document.querySelector("#email").value;
-    const password = document.querySelector("#password").value;
-  
-    var email = new AmazonCognitoIdentity.CognitoUserAttribute({
-      Name: "email",
-      Value: emailadd,
-    });
-  
-    userPool.signUp(username, password, [email], null, function (err, result) {
-      if (err) {
-        alert(err);
-      } else {
-        location.href = "confirm.html#" + username;
-      }
-    });
-  };
+const signUp = async () => {
+    const email = document.getElementById('sign-up-email').value;
+    const password = document.getElementById('sign-up-password').value;
+    
+    try {
+        const { user } = await Auth.signUp({
+            username: email,
+            password,
+        });
+        console.log('Sign up successful', user);
+    } catch (error) {
+        console.error('Error signing up:', error);
+    }
+};
 
-  const confirmCode = () => {
-    event.preventDefault();
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-    const username = location.hash.substring(1);
-    const cognitoUser = new AmazonCognitoIdentity.CognitoUser({
-      Username: username,
-      Pool: userPool,
-    });
-    const code = document.querySelector("#confirm").value;
-    console.log("code =" + code);
-    cognitoUser.confirmRegistration(code, true, function (err, results) {
-      if (err) {
-        alert(err);
-      } else {
-        console.log("confirmed");
-        location.href = "signin.html";
-      }
-    });
-  };
+const signIn = async () => {
+    const email = document.getElementById('sign-in-email').value;
+    const password = document.getElementById('sign-in-password').value;
+    
+    try {
+        const user = await Auth.signIn(email, password);
+        console.log('Sign in successful', user);
+        loadProducts();
+    } catch (error) {
+        console.error('Error signing in:', error);
+    }
+};
 
-  const resendCode = () => {
-    event.preventDefault();
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-    const username = location.hash.substring(1);
-    const cognitoUser = new AmazonCognitoIdentity.CognitoUser({
-      Username: username,
-      Pool: userPool,
-    });
-    cognitoUser.resendConfirmationCode(function (err) {
-      if (err) {
-        alert(err);
-      }
-    });
-  };
+const signOut = async () => {
+    try {
+        await Auth.signOut();
+        console.log('Sign out successful');
+    } catch (error) {
+        console.error('Error signing out:', error);
+    }
+};
 
-  const signIn = () => {
-    event.preventDefault();
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-    const username = document.querySelector("#username").value;
-    const password = document.querySelector("#password").value;
-  
-    let authenticationData = {
-      Username: username,
-      Password: password,
-    };
-  
-    var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(
-      authenticationData
-    );
-    var userData = {
-      Username: username,
-      Pool: userPool,
-    };
-  
-    var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-    cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: function () {
-        console.log("login success");
-        location.href = "index.html";
-      },
-      onFailure: function (err) {
-        alert(JSON.stringify(err));
-      },
-    });
-  };
-  
-  const signOut = () => {
-    console.log("sign out");
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-    var cognitoUser = userPool.getCurrentUser();
-    if (cognitoUser) cognitoUser.signOut();
-  };
+const resetPassword = async () => {
+    const email = document.getElementById('reset-password-email').value;
 
-  const checkLogin = () => {
-    console.log("checking login..");
-    const login = false;
-    const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-    const userBtn = document.querySelector(".user");
-    var cognitoUser = userPool.getCurrentUser();
-    if (cognitoUser != null) {
-        userBtn.innerHTML += cognitoUser.username;
-    } 
-  };
+    try {
+        await Auth.forgotPassword(email);
+        console.log('Password reset email sent');
+    } catch (error) {
+        console.error('Error resetting password:', error);
+    }
+};
+
+const loadProducts = async () => {
+    try {
+        const products = await API.get('reactAppApi', '/products');
+        const productList = document.getElementById('product-list');
+        productList.innerHTML = '';
+        products.forEach(product => {
+            const li = document.createElement('li');
+            li.textContent = product.name;
+            productList.appendChild(li);
+        });
+    } catch (error) {
+        console.error('Error loading products:', error);
+    }
+};
+
+const addToCart = async (productId) => {
+    try {
+        await API.post('reactAppApi', '/cart', { body: { productId } });
+        console.log('Product added to cart');
+    } catch (error) {
+        console.error('Error adding product to cart:', error);
+    }
+};
+
+const loadCart = async () => {
+    try {
+        const cart = await API.get('reactAppApi', '/cart');
+        const cartList = document.getElementById('cart-list');
+        cartList.innerHTML = '';
+        cart.items.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item.name;
+            cartList.appendChild(li);
+        });
+    } catch (error) {
+        console.error('Error loading cart:', error);
+    }
+};
+
+const checkout = async () => {
+    try {
+        await API.post('reactAppApi', '/checkout');
+        console.log('Checkout successful');
+    } catch (error) {
+        console.error('Error during checkout:', error);
+    }
+};

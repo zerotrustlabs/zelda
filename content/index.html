@@ -28,7 +28,7 @@
         </div>
     </nav>
     <div class="container">
-        <!-- <div class="mid-box">
+        <div class="mid-box">
             <h2>Welcome to Dynamo Chat</h2>
             <p>
                This is simple chat application to experiment with AWS features like Dynamo Db and Cognito. 
@@ -36,29 +36,37 @@
             </p>
          
             <div class="login-btns">
-                <button class="btn left" onclick="navTosignIn()">Start</button>
-                <button class="btn right" onclick="navTosignUp()">Register</button>
+                <h2>Sign In to Zelda Portal</h2>
+                <input type="text" id="sign-in-email" placeholder="Email" />
+                <input type="password" id="sign-in-password" placeholder="Password" />
+                <button onclick="signIn()">Sign In</button>
             </div>
-        </div> -->
+        </div>
         <div class="center">
             <div class="vflex">
-                <h2>Welcome to My App</h2>
+                <h2>Welcome to Zelda Online</h2>
                 <p>
                     This is simple  application to experiment with AWS Cognito.  
                  </p>
                  <div class="login-btns">
-                    <button class="btn left" onclick="navTosignIn()">Start</button>
+                    <h2 id="titleheader">Register An Account</h2>
+                    <input type="text" id="personalname-register" placeholder="Name" /> 
+                    <input type="email" id="sign-up-email" placeholder="Email" /> 
+                    <input type="password" id="sign-up-password" placeholder="Password" />
+                    <input type="password" id="confirm-password" placeholder="Confirm Password" />
+                    <button onclick="signUp()">Sign Up</button>
                 </div>
             </div>
         
         </div>
     </div>
-    <!-- <script src="config.js"></script>
-    <script src="amazon-cognito-identity.min.js"></script>
-    <script src="app.js"></script>
-    <script type="text/javascript">
-        checkLogin();
-    </script> -->
+    <script src="./config.js"></script>
+    <script src="./amazon-cognito-identity.min.js"></script>
+    <script src="./signin.js"></script>
+    <script src="./crypto-js.min.js"></script>
+    <script src="./aws-sdk-2.7.16.min.js"></script>
+    <script src="./require.js"></script>
+    <script  src="./app5.js"></script>
 </body>
 
 </html>

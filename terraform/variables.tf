@@ -15,7 +15,13 @@ variable "tfc_network_workspace_name" {
 variable "aws_region" {
   description = "AWS region for all resources."
   type        = string
-  default     = "eu-west-1"
+  default = "us-east-1"
+}
+
+variable "account_id" {
+  description = "AWS Account Id."
+  type        = string
+  default = "603825719481"
 }
 variable "website_root" {
   type        = string

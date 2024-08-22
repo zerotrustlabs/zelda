@@ -1,0 +1,13 @@
+{
+    "name": "@aws-doc-sdk/javascript3-cognito",
+    "version": "1.0.0",
+    "description": "Code samples for interacting with Cognito via the AWS SDK for JavaScript (v3)",
+    "main": "app5.js",
+    "author": "Anthony",
+    "license": "Apache-2.0",
+    "type": "module",
+    "dependencies": {
+      "amazon-cognito-identity-js": "^6.3.6",
+      "crypto-js": "^4.2.0"
+    }
+  }

@@ -118,15 +118,23 @@ resource "aws_cognito_user_pool_client" "user_pool_client" {
 
   user_pool_id                  = aws_cognito_user_pool.user_pool.id
   generate_secret               = false
+  # Note that Generate client secret must be unchecked when creating a web app; the Amazon Cognito Identity SDK for JavaScript doesn’t support apps that have a client secret simply because the client secret could be easily viewed in your code.
+  # https://aws.amazon.com/blogs/mobile/accessing-your-user-pools-using-the-amazon-cognito-identity-sdk-for-javascript/#:~:text=Note%20that%20Generate%20client%20secret,easily%20viewed%20in%20your%20code.
   refresh_token_validity        = 90
   prevent_user_existence_errors = "ENABLED"
   explicit_auth_flows = [
     "ALLOW_REFRESH_TOKEN_AUTH",
     "ALLOW_USER_PASSWORD_AUTH",
-    "ALLOW_ADMIN_USER_PASSWORD_AUTH"
+    "ALLOW_ADMIN_USER_PASSWORD_AUTH",
+    "ALLOW_USER_SRP_AUTH",
+    "ALLOW_REFRESH_TOKEN_AUTH",
+    "ALLOW_CUSTOM_AUTH",
   ]
   allowed_oauth_flows  = ["code", "implicit"]
-  allowed_oauth_scopes = ["email", "openid", "profile","aws.cognito.signin.user.admin"]
+  # allowed_oauth_flows  = ["code", "implicit", "client_credentials"]
+  # allowed_oauth_flows  = ["client_credentials"]
+  # allowed_oauth_scopes = ["email", "openid", "profile","aws.cognito.signin.user.admin"]
+  allowed_oauth_scopes = aws_cognito_resource_server.resource.scope_identifiers
   callback_urls        = ["https://example.com/callback"]
   logout_urls          = ["https://example.com/logout"]
   supported_identity_providers         = ["COGNITO"]
@@ -173,14 +181,23 @@ resource "aws_cognito_user_in_group" "example" {
   username     = aws_cognito_user.ALLOW_USER_PASSWORD_AUTH.username
 }
 
-# resource "aws_cognito_resource_server" "resource" {
-#   identifier = "https://example.com"
-#   name       = "zelda"
+resource "aws_cognito_resource_server" "resource" {
+  identifier = "zelda-products"
+  name       = "zelda-products"
 
-#   # scope {
-#   #   scope_name        = "sample-scope"
-#   #   scope_description = "a Sample Scope Description"
-#   # }
+  scope {
+    scope_name        = "read-products"
+    scope_description = "Retrieve Products"
+  }
 
-#   user_pool_id = "${aws_cognito_user_pool.user_pool.id}"
+  user_pool_id = "${aws_cognito_user_pool.user_pool.id}"
+}
+
+# output "user_pool_client_secret" {
+#   value = aws_cognito_user_pool_client.user_pool_client.client_secret
+#   sensitive = true
 # }
+
+# To retrieve the client secret run the following command
+# terraform output user_pool_client_secret
+# "1v14artrfnurgumdqo92ginpbegt6ach4f3oe2lnm2947jeibp6k"

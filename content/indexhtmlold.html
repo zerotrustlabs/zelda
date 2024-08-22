@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Welcome to the E-commerce App</h1>
+        <div id="auth-container">
+            <div id="sign-up-form">
+                <h2>Sign Up</h2>
+                <input type="text" id="sign-up-email" placeholder="Email" />
+                <input type="password" id="sign-up-password" placeholder="Password" />
+                <button onclick="signUp()">Sign Up</button>
+            </div>
+            <div id="sign-in-form">
+                <h2>Sign In</h2>
+                <input type="text" id="sign-in-email" placeholder="Email" />
+                <input type="password" id="sign-in-password" placeholder="Password" />
+                <button onclick="signIn()">Sign In</button>
+            </div>
+            <div id="reset-password-form">
+                <h2>Reset Password</h2>
+                <input type="text" id="reset-password-email" placeholder="Email" />
+                <button onclick="resetPassword()">Reset Password</button>
+            </div>
+            <div id="logout-button">
+                <button onclick="signOut()">Sign Out</button>
+            </div>
+        </div>
+        <div id="products">
+            <h2>Products</h2>
+            <ul id="product-list"></ul>
+        </div>
+        <div id="cart">
+            <h2>Cart</h2>
+            <ul id="cart-list"></ul>
+        </div>
+        <div id="checkout">
+            <h2>Checkout</h2>
+            <button onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+    <script src="app2.js"></script>
+    <!-- <script src="aws-exports.js"></script> -->
+</body>
+</html>

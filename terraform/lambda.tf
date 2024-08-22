@@ -14,6 +14,18 @@
 #   }
 #   depends_on = [null_resource.zip_lambda]
 # }
+
+
+resource "terraform_data" "tf_data_resource_hello" {
+  # Defines when the provisioner should be executed
+  triggers_replace = [
+    # The provisioner is executed then the `id` of the EC2 instance changes
+    filemd5("${path.module}/lambda-layer/nodejs/package.json")
+  ]
+  provisioner "local-exec" {
+    command = "cd ${path.module}/lambda-layer/nodejs && npm install && cd .. && zip -r nodejs.zip ."
+  }
+}
 resource "random_id" "server" {
   byte_length = 8
 }
@@ -48,35 +60,75 @@ resource "aws_lambda_function" "post_auth_lambda" {
 
 # Products Lambda
 
+data "archive_file" "get_products" {
+  type             = "zip"
+  source_file      = "../content/getProducts.js"
+  output_file_mode = "0666"
+  output_path      = "${path.module}/files/getProducts.zip"
+}
+data "archive_file" "add_products" {
+  type             = "zip"
+  source_file      = "../content/addProducts.js"
+  output_file_mode = "0666"
+  output_path      = "${path.module}/files/addProducts.zip"
+}
+
+data "archive_file" "update_products" {
+  type             = "zip"
+  source_file      = "../content/updateProducts.js"
+  output_file_mode = "0666"
+  output_path      = "${path.module}/files/updateProducts.zip"
+}
+
+data "archive_file" "delete_products" {
+  type             = "zip"
+  source_file      = "../content/deleteProducts.js"
+  output_file_mode = "0666"
+  output_path      = "${path.module}/files/deleteProducts.zip"
+}
+# resource "aws_lambda_layer_version" "lambda_deps_layer" {
+#   layer_name          = "shared_deps"
+#   # filename            = data.archive_file.get_products.output_path
+#   filename            = "${path.module}/lambda-layer/nodejs.zip"
+#   # source_code_hash    = data.archive_file.get_products.output_base64sha256
+#   compatible_runtimes = ["nodejs14.x", "nodejs16.x" ]
+# }
 # Lambda Functions
-# resource "aws_lambda_function" "get_products" {
-#   filename         = "lambda/getProducts.zip"
-#   function_name    = "get_products"
-#   role             = aws_iam_role.lambda_execution.arn
-#   handler          = "index.handler"
-#   runtime          = "nodejs14.x"
-# }
+resource "aws_lambda_function" "get_products" {
+  filename         = "${path.module}/files/getProducts.zip"
+  function_name    = "get_products"
+  role             = aws_iam_role.lambda_logging_role.arn
+  handler          = "getProducts.handler"
+  source_code_hash = data.archive_file.get_products.output_base64sha256
+  runtime = "nodejs16.x"
+  # layers = [
+  #   aws_lambda_layer_version.lambda_deps_layer.arn
+  # ]
+}
 
-# resource "aws_lambda_function" "add_product" {
-#   filename         = "lambda/addProduct.zip"
-#   function_name    = "add_product"
-#   role             = aws_iam_role.lambda_execution.arn
-#   handler          = "index.handler"
-#   runtime          = "nodejs14.x"
-# }
+resource "aws_lambda_function" "add_products" {
+  filename         = "${path.module}/files/addProducts.zip"
+  function_name    = "add_products"
+  role             = aws_iam_role.lambda_logging_role.arn
+  handler          = "addProducts.handler"
+  source_code_hash = data.archive_file.add_products.output_base64sha256
+  runtime          = "nodejs16.x"
+}
 
-# resource "aws_lambda_function" "update_product" {
-#   filename         = "lambda/updateProduct.zip"
-#   function_name    = "update_product"
-#   role             = aws_iam_role.lambda_execution.arn
-#   handler          = "index.handler"
-#   runtime          = "nodejs14.x"
-# }
+resource "aws_lambda_function" "update_products" {
+  filename         = "${path.module}/files/updateProducts.zip"
+  function_name    = "update_product"
+  role             = aws_iam_role.lambda_logging_role.arn
+  handler          = "updateProducts.handler"
+  source_code_hash = data.archive_file.update_products.output_base64sha256
+  runtime          = "nodejs16.x"
+}
 
-# resource "aws_lambda_function" "delete_product" {
-#   filename         = "lambda/deleteProduct.zip"
-#   function_name    = "delete_product"
-#   role             = aws_iam_role.lambda_execution.arn
-#   handler          = "index.handler"
-#   runtime          = "nodejs14.x"
-# }
+resource "aws_lambda_function" "delete_product" {
+  filename         = "${path.module}/files/deleteProducts.zip"
+  function_name    = "delete_product"
+  role             = aws_iam_role.lambda_logging_role.arn
+  handler          = "deleteProducts.handler"
+  source_code_hash = data.archive_file.delete_products.output_base64sha256
+  runtime          = "nodejs16.x"
+}

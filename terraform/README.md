@@ -118,5 +118,66 @@ https://github.com/leomenezessz/pizza-orders/blob/0f0be3f40e5004cbbf0c8657d1b106
 
 https://github.com/cloudveto/terraform-modules/blob/49d6d422e64f4db3c7003d9784939bc9e79078c7/aws/api-gateway/main.tf
 
+https://github.com/leomenezessz/pizza-orders/blob/0f0be3f40e5004cbbf0c8657d1b1066a34d9048b/apigtw.tf
+
 JAVASCRIPT CODES
 https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/cognito-identity-provider/actions/sign-up.js#L9
+
+
+AWS SDK
+
+https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javascript/example_code/dynamodb#code-examples
+https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/dynamodb/
+https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/dynamodb-example-table-read-write.html
+https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascript/example_code/dynamodb/ddb_getitem.js
+
+
+Build Serverless Applications with Terraform
+https://catalog.workshops.aws/serverless-app-terraform/en-US
+
+Secret Manager Key Rotator/ Secret Manager Parameter Store
+https://webstep.se/nyheter--blogginlagg/blogginlagg/use-terraform-to-create-an-aws-cloudfront-distribution
+
+https://github.com/madvonh/cloudfront-cognito-signed-cookies-terraform/tree/main/key-rotator
+
+OBJECT lAMBDA cLOUDfront
+https://aws.amazon.com/blogs/storage/modify-images-cached-in-amazon-cloudfront-using-amazon-s3-object-lambda/
+https://github.com/aws-samples/amazon-s3-object-lambda-with-amazon-cloudfront/blob/main/app.py
+https://github.com/aws-samples/amazon-s3-object-lambda-with-amazon-cloudfront/tree/main
+
+
+Cloudfront route 53
+https://www.linkedin.com/pulse/leveraging-amazon-cloudfront-s3-route-53-subdomain-jon-bonso-uhyxc/
+
+Authorization@Edge – How to Use Lambda@Edge and JSON Web Tokens to Enhance Web Application Security
+https://aws.amazon.com/blogs/networking-and-content-delivery/authorizationedge-how-to-use-lambdaedge-and-json-web-tokens-to-enhance-web-application-security/
+
+Code demonstrates authorization with Lambda@Edge and JSON Web Tokens (JWTs)
+https://github.com/aws-samples/authorization-lambda-at-edge/blob/master/README.md
+
+APIGATEWAY LAMBDA
+https://medium.com/@heenriquecds/terraform-creating-node-js-lambda-functions-with-packages-cddc9a91cf93
+
+Secret manager
+https://webstep.se/nyheter--blogginlagg/blogginlagg/use-terraform-to-create-an-aws-cloudfront-distribution
+
+Key ROTATION
+https://github.com/madvonh/cloudfront-cognito-signed-cookies-terraform/blob/main/secretsmanager_secret.tf
+
+secret hash
+https://dev.to/shamsup/creating-the-secret-hash-for-aws-cognito-in-nodejs-50f7
+
+CloudFront Access Denied
+https://repost.aws/questions/QU_I2oKsRMTBWmdB6S16Q66Q/why-does-my-cloudfront-distribution-give-access-denied-when-i-have-any-path-or-query-params-in-the-url
+
+https://www.maxivanov.io/aws-cognito-amplify-vs-amazon-cognito-identity-js-vs-aws-sdk/
+https://dev.to/shamsup/creating-the-secret-hash-for-aws-cognito-in-nodejs-50f7
+https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/cognito-identity-provider/hello.js
+
+Fetch Inatercept
+https://github.com/aws-amplify/amplify-js/issues/1368
+
+https://www.youtube.com/watch?v=blZYIiUdYgQ
+
+POSTMAN CALL BACK URL
+https://oauth.pstmn.io/v1/callback
