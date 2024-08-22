@@ -12,6 +12,14 @@ variable "tfc_network_workspace_name" {
 }
 
 
+variable "AWS_SECRET_ACCESS_KEY" {
+  default = ""
+}
+
+variable "AWS_ACCESS_KEY_ID" {
+  default = ""
+}
+
 variable "aws_region" {
   description = "AWS region for all resources."
   type        = string
