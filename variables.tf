@@ -37,3 +37,15 @@ variable "instance_type" {
   type        = string
   default     = "t2.micro"
 }
+
+variable "aws_region" {
+  description = "AWS region for all resources."
+  type        = string
+  default = "us-east-1"
+}
+
+variable "account_id" {
+  description = "AWS Account Id."
+  type        = string
+  default = "603825719481"
+}
