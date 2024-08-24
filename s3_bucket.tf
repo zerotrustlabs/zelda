@@ -1,19 +1,23 @@
 resource "aws_s3_bucket" "zelda_static_website" {
-  bucket = "${var.project_prefix}-ztls"
-
+  bucket        = "${var.project_prefix}-ztls"
+  force_destroy = var.website_bucket_force_destroy
   tags = (merge(
     tomap({ "Application" = "${var.project_prefix}" }),
     tomap({ "Managed" = "Terraform" })
   ))
 }
 
+resource "aws_s3_bucket_versioning" "zelda_static_versioning" {
+  bucket = aws_s3_bucket.zelda_static_website.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 resource "aws_s3_bucket_website_configuration" "s3_bucket" {
   bucket = aws_s3_bucket.zelda_static_website.id
-
   index_document {
     suffix = "index.html"
   }
-
   error_document {
     key = "error.html"
   }
@@ -40,7 +44,6 @@ resource "aws_s3_object" "object_www" {
 
 resource "aws_s3_bucket_policy" "s3_bucket" {
   bucket = aws_s3_bucket.zelda_static_website.id
-
   policy = data.aws_iam_policy_document.s3_access.json
 }
 

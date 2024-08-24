@@ -15,3 +15,10 @@ https://github.com/madvonh/cloudfront-cognito-signed-cookies-terraform/blob/main
 
 API Gateway Apps
 https://github.com/davidpaulmcintyre/cra-todo/blob/master/src/actions/todo.js
+
+API GATEWAY SERVERLESS
+https://vinisantos.dev/posts/hands-on-aws-agw-terraform-sls-framework-part-3
+
+
+AWS OPA
+https://github.com/aws-samples/aws-infra-policy-as-code-with-terraform/blob/main/policy-as-code/OPA/policy/aws/apigateway/aws-apigateway-m-1.rego
