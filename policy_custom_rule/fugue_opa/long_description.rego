@@ -8,7 +8,7 @@ __rego__metadoc__ := {
   "custom": {
     "controls": {
       "CORPORATE-POLICY": [
-        "CORPORATE-POLICY_1.4"
+        "CORPORATE-POLICY_2.0"
       ]
     },
     "severity": "Low"
