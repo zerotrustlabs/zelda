@@ -32,3 +32,4 @@ Regula Fugue
 https://github.com/fugue/regula-ci-example/blob/master/infra_tf/main.tf
 ADVANCED
 https://github.com/fugue/custom-rules/blob/master/old_metadata_format/advanced/Advanced_AWS.MultiResource_AllTaggableResourcesRequireTags.rego
+WAIVER LOGGING RULES - https://github.com/fugue/fugue-scalr-integration/blob/main/waivers.rego
