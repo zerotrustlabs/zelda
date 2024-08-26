@@ -30,3 +30,5 @@ https://github.com/aws-samples/aws-infra-policy-as-code-with-terraform/blob/main
 
 Regula Fugue
 https://github.com/fugue/regula-ci-example/blob/master/infra_tf/main.tf
+ADVANCED
+https://github.com/fugue/custom-rules/blob/master/old_metadata_format/advanced/Advanced_AWS.MultiResource_AllTaggableResourcesRequireTags.rego
