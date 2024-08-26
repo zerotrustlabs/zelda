@@ -1,7 +1,7 @@
 resource "aws_cognito_user_pool" "user_pool" {
   name = "zerotrust_users"
 
-  username_attributes      = ["email"]
+  username_attributes = ["email"]
   username_configuration {
     case_sensitive = true
   }
@@ -38,9 +38,9 @@ resource "aws_cognito_user_pool" "user_pool" {
     required                 = false
     developer_only_attribute = false
   }
-email_configuration {
-  email_sending_account = "COGNITO_DEFAULT"
-}
+  email_configuration {
+    email_sending_account = "COGNITO_DEFAULT"
+  }
   schema {
     name                     = "foo"
     attribute_data_type      = "String"
@@ -50,64 +50,64 @@ email_configuration {
     string_attribute_constraints {}
   }
 
-    /** Required Standard Attributes*/
-    schema {
-      attribute_data_type = "String"
-      mutable = true
-      name = "email"
-      required = true
-      string_attribute_constraints {
-        min_length = 1
-        max_length = 2048
-      }
+  /** Required Standard Attributes*/
+  schema {
+    attribute_data_type = "String"
+    mutable             = true
+    name                = "email"
+    required            = true
+    string_attribute_constraints {
+      min_length = 1
+      max_length = 2048
     }
+  }
 
-    schema {
-      attribute_data_type = "String"
-      mutable = true
-      name = "given_name"
-      required = false
-      string_attribute_constraints {
-        min_length = 1
-        max_length = 2048
-      }
+  schema {
+    attribute_data_type = "String"
+    mutable             = true
+    name                = "given_name"
+    required            = false
+    string_attribute_constraints {
+      min_length = 1
+      max_length = 2048
     }
+  }
 
-    schema {
-      attribute_data_type = "String"
-      mutable = true
-      name = "family_name"
-      required = false
-      string_attribute_constraints {
-        min_length = 1
-        max_length = 2048
-      }
+  schema {
+    attribute_data_type = "String"
+    mutable             = true
+    name                = "family_name"
+    required            = false
+    string_attribute_constraints {
+      min_length = 1
+      max_length = 2048
     }
+  }
 
-    /** Custom Attributes */
-    schema {
-      attribute_data_type      = "String"
-      developer_only_attribute = false
-      mutable                  = true
-      name                     = "PersonalInfo"
-      required                 = false
-      string_attribute_constraints {
-        min_length = 1
-        max_length = 2048
-      }
+  /** Custom Attributes */
+  schema {
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = true
+    name                     = "PersonalInfo"
+    required                 = false
+    string_attribute_constraints {
+      min_length = 1
+      max_length = 2048
     }
+  }
 
-    schema {
-      attribute_data_type      = "String"
-      developer_only_attribute = false
-      mutable                  = true
-      name                     = "Role"
-      required                 = false
-      string_attribute_constraints {
-        min_length = 1
-        max_length = 2048
-      }
-    }  
+  schema {
+    attribute_data_type      = "String"
+    developer_only_attribute = false
+    mutable                  = true
+    name                     = "Role"
+    required                 = false
+    string_attribute_constraints {
+      min_length = 1
+      max_length = 2048
+    }
+  }
   # lambda_config {
   #   post_authentication = aws_lambda_function.post_auth_lambda.arn
   # }
@@ -116,8 +116,8 @@ email_configuration {
 resource "aws_cognito_user_pool_client" "user_pool_client" {
   name = "zerotrust-cognito-client"
 
-  user_pool_id                  = aws_cognito_user_pool.user_pool.id
-  generate_secret               = false
+  user_pool_id    = aws_cognito_user_pool.user_pool.id
+  generate_secret = false
   # Note that Generate client secret must be unchecked when creating a web app; the Amazon Cognito Identity SDK for JavaScript doesn’t support apps that have a client secret simply because the client secret could be easily viewed in your code.
   # https://aws.amazon.com/blogs/mobile/accessing-your-user-pools-using-the-amazon-cognito-identity-sdk-for-javascript/#:~:text=Note%20that%20Generate%20client%20secret,easily%20viewed%20in%20your%20code.
   refresh_token_validity        = 90
@@ -130,13 +130,13 @@ resource "aws_cognito_user_pool_client" "user_pool_client" {
     "ALLOW_REFRESH_TOKEN_AUTH",
     "ALLOW_CUSTOM_AUTH",
   ]
-  allowed_oauth_flows  = ["code", "implicit"]
+  allowed_oauth_flows = ["code", "implicit"]
   # allowed_oauth_flows  = ["code", "implicit", "client_credentials"]
   # allowed_oauth_flows  = ["client_credentials"]
   # allowed_oauth_scopes = ["email", "openid", "profile","aws.cognito.signin.user.admin"]
-  allowed_oauth_scopes = aws_cognito_resource_server.resource.scope_identifiers
-  callback_urls        = ["https://example.com/callback"]
-  logout_urls          = ["https://example.com/logout"]
+  allowed_oauth_scopes                 = aws_cognito_resource_server.resource.scope_identifiers
+  callback_urls                        = ["https://example.com/callback"]
+  logout_urls                          = ["https://example.com/logout"]
   supported_identity_providers         = ["COGNITO"]
   allowed_oauth_flows_user_pool_client = true
 }
@@ -190,5 +190,5 @@ resource "aws_cognito_resource_server" "resource" {
     scope_description = "Retrieve Products"
   }
 
-  user_pool_id = "${aws_cognito_user_pool.user_pool.id}"
+  user_pool_id = aws_cognito_user_pool.user_pool.id
 }

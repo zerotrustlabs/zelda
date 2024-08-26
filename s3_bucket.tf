@@ -11,14 +11,14 @@ resource "aws_s3_bucket" "this" {
 }
 
 resource "aws_s3_bucket_versioning" "this" {
-    count = local.create_bucket && length(keys(var.website)) > 0 ? 1 : 0
+  count  = local.create_bucket && length(keys(var.website)) > 0 ? 1 : 0
   bucket = aws_s3_bucket.this[count.index].id
   versioning_configuration {
     status = "Enabled"
   }
 }
 resource "aws_s3_bucket_website_configuration" "s3_bucket" {
-    count = local.create_bucket && length(keys(var.website)) > 0 ? 1 : 0
+  count  = local.create_bucket && length(keys(var.website)) > 0 ? 1 : 0
   bucket = aws_s3_bucket.this[count.index].id
   index_document {
     suffix = "index.html"
@@ -31,14 +31,14 @@ resource "aws_s3_bucket_website_configuration" "s3_bucket" {
 
 
 resource "aws_s3_bucket_acl" "s3_bucket" {
-    count = local.create_bucket && local.create_bucket_acl ? 1 : 0
+  count      = local.create_bucket && local.create_bucket_acl ? 1 : 0
   bucket     = aws_s3_bucket.this[count.index].id
   acl        = "public-read"
   depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership]
 }
 
 resource "aws_s3_object" "object_www" {
-    # count = local.create_bucket && var.control_object_ownership ? 1 : 0
+  # count = local.create_bucket && var.control_object_ownership ? 1 : 0
   depends_on   = [aws_s3_bucket.this]
   for_each     = local.website_files
   bucket       = aws_s3_bucket.this[0].id
@@ -50,13 +50,14 @@ resource "aws_s3_object" "object_www" {
 }
 
 resource "aws_s3_bucket_policy" "s3_bucket" {
+  count  = local.create_bucket && var.attach_public_policy ? 1 : 0
   bucket = aws_s3_bucket.this[0].id
   policy = data.aws_iam_policy_document.s3_access[0].json
 }
 
 
 resource "aws_s3_bucket_ownership_controls" "s3_bucket_acl_ownership" {
-    count = local.create_bucket && var.control_object_ownership ? 1 : 0
+  count  = local.create_bucket && var.control_object_ownership ? 1 : 0
   bucket = aws_s3_bucket.this[count.index].id
   rule {
     object_ownership = "BucketOwnerPreferred"
@@ -65,7 +66,7 @@ resource "aws_s3_bucket_ownership_controls" "s3_bucket_acl_ownership" {
 }
 
 resource "aws_s3_bucket_public_access_block" "this" {
-    count = local.create_bucket && var.attach_public_policy ? 1 : 0
+  count  = local.create_bucket && var.attach_public_policy ? 1 : 0
   bucket = aws_s3_bucket.this[count.index].id
 
   block_public_acls       = true
@@ -83,25 +84,25 @@ resource "aws_s3_bucket_logging" "this" {
   target_prefix = try(var.logging["target_prefix"], null)
 
 
-#   dynamic "target_object_key_format" {
-#     for_each = try([var.logging["target_object_key_format"]], [])
+  #   dynamic "target_object_key_format" {
+  #     for_each = try([var.logging["target_object_key_format"]], [])
 
-#     content {
-#       dynamic "partitioned_prefix" {
-#         for_each = try(target_object_key_format.value["partitioned_prefix"], [])
+  #     content {
+  #       dynamic "partitioned_prefix" {
+  #         for_each = try(target_object_key_format.value["partitioned_prefix"], [])
 
-#         content {
-#           partition_date_source = try(partitioned_prefix.value, null)
-#         }
-#       }
+  #         content {
+  #           partition_date_source = try(partitioned_prefix.value, null)
+  #         }
+  #       }
 
-#       dynamic "simple_prefix" {
-#         for_each = contains(keys(target_object_key_format.value), "simple_prefix") ? [true] : []
+  #       dynamic "simple_prefix" {
+  #         for_each = contains(keys(target_object_key_format.value), "simple_prefix") ? [true] : []
 
-#         content {}
-#       }
-#     }
-#   }
+  #         content {}
+  #       }
+  #     }
+  #   }
 }
 
 
