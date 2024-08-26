@@ -1,6 +1,6 @@
 resource "aws_iam_role" "authenticated_role" {
   #   name = "Cognito_${aws_cognito_identity_pool.identity_pool.id}_auth_Role"
-  name = locals.authrole
+  name = local.authrole
 
   assume_role_policy = <<EOF
 {
@@ -28,7 +28,7 @@ EOF
 
 resource "aws_iam_role" "unauthenticated_role" {
   # name                 = "zerotrustlabs_Cognito_unauth_Role"
-  name                 = locals.unauthrole
+  name                 = local.unauthrole
   max_session_duration = "3600"
   assume_role_policy   = <<EOF
 {

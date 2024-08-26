@@ -1,4 +1,5 @@
 data "aws_iam_policy_document" "s3_access" {
+    count = local.create_bucket && local.attach_policy ? 1 : 0
   version = "2012-10-17"
   statement {
     sid    = "ObjectWriteAccess"
@@ -7,7 +8,7 @@ data "aws_iam_policy_document" "s3_access" {
       "s3:PutObject*"
     ]
     resources = [
-      "${aws_s3_bucket.zelda_static_website.arn}/*"
+      "${aws_s3_bucket.this[count.index].arn}/*"
     ]
     principals {
       type = "AWS"
