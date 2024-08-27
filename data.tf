@@ -1,3 +1,4 @@
+data "aws_caller_identity" "self" {}
 data "aws_iam_policy_document" "s3_access" {
 #   count   = local.create_bucket && local.attach_policy ? 1 : 0
   version = "2012-10-17"
@@ -8,7 +9,7 @@ data "aws_iam_policy_document" "s3_access" {
       "s3:PutObject*"
     ]
     resources = [
-      "${aws_s3_bucket.this.arn}/*"
+      "${aws_s3_bucket.this.arn}/*",
     ]
     principals {
       type = "AWS"

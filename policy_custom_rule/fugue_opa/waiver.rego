@@ -25,7 +25,7 @@ rules[rule[_]] {
     {
     #Disabling S3 bucket server-side encryption for static s3 website
     "rule_id": "FG_R00355",
-    "status": "DISABLED"
+    "status": "ENABLED"
   },
   ]
 }

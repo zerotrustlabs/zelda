@@ -16,6 +16,9 @@ https://github.com/madvonh/cloudfront-cognito-signed-cookies-terraform/blob/main
 https://github.com/terraform-aws-modules/terraform-aws-s3-bucket/blob/master/main.tf
 https://github.com/cn-terraform/terraform-aws-s3-static-website/blob/main/website.tf
 
+https://github.com/aws-samples/s3-presignedurl-staticips-endpoint-with-terraform/blob/main/2.apigw_s3_lambda/main.tf
+
+
 API Gateway Apps
 https://github.com/davidpaulmcintyre/cra-todo/blob/master/src/actions/todo.js
 

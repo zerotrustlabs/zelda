@@ -11,6 +11,7 @@ resource "aws_s3_bucket" "this" {
 }
 resource "aws_s3_bucket" "log_bucket" {
   bucket = "zelda-tf-log-bucket"
+  force_destroy       = var.website_bucket_force_destroy
 }
 resource "aws_s3_bucket_versioning" "this" {
 #   count  = local.create_bucket && length(keys(var.website)) > 0 ? 1 : 0
@@ -35,7 +36,7 @@ resource "aws_s3_bucket_website_configuration" "s3_bucket" {
 resource "aws_s3_bucket_acl" "s3_bucket" {
 #   count      = local.create_bucket && local.create_bucket_acl ? 1 : 0
   bucket     = aws_s3_bucket.this.id
-  acl        = "public-read"
+  acl        = "private"
   depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership]
 }
 
@@ -110,4 +111,27 @@ resource "aws_s3_bucket_object_lock_configuration" "this" {
       days = 5
     }
   }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_server_side_encryption_configuration" {
+  bucket = aws_s3_bucket.this.id
+
+  rule {
+    bucket_key_enabled = true
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_cors_configuration" "this" {
+  bucket = aws_s3_bucket.this.id  
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET", "HEAD"]
+    allowed_origins = ["*"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3000
+  }  
 }
