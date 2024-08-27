@@ -33,3 +33,12 @@ Assessment: Start by assessing the current security posture using the CIS Contro
 Planning: Develop a plan to implement Zero Trust principles, mapping these to the relevant CIS Controls.
 Execution: Implement Zero Trust security measures in line with CIS guidelines, ensuring continuous monitoring and adjustment.
 In summary, Zero Trust and CIS are complementary frameworks. The CIS Controls provide a solid foundation for cybersecurity, while Zero Trust adds an extra layer of defense by eliminating implicit trust within the network, ensuring that every user, device, and application is continuously verified before accessing resources.
+
+
+Creating the Static S3 Bucket
+
+1. Youll have to set the following values in the S3 bucket configuration
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false

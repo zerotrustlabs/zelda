@@ -104,7 +104,7 @@ variable "bucket_prefix" {
 variable "object_lock_enabled" {
   description = "Whether S3 bucket should have an Object Lock configuration enabled."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "block_public_acls" {

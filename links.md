@@ -134,3 +134,11 @@ policy[r] {
   bucket.tags.stage == "prod"
   r = fugue.deny_resource(bucket)
 }
+
+
+terraform-aws-modules/s3-bucket/aws module, simply use:
+
+# S3 Bucket Ownership Controls
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_ownership_controls
+control_object_ownership = true
+object_ownership         = "BucketOwnerPreferred"
