@@ -1,7 +1,7 @@
 package fugue.regula.config
 
 
-waivers[waiver[_] {
+waivers[waiver[_]] {
   waiver := [{
       #Waiving the bucket logging rule for the logging bucket
     "rule_id": "FG_R00274",
