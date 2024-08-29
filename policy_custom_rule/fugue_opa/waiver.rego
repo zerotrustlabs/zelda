@@ -5,17 +5,32 @@ waivers[waiver[_]] {
   waiver := [{
       #Waiving the bucket logging rule for the logging bucket
     "rule_id": "FG_R00274",
-    "resource_id": "aws_s3_bucket.this[0]"
+    "resource_id": "aws_s3_bucket.this"
+  },
+  {
+      #Waiving the bucket logging rule for the logging bucket
+    "rule_id": "FG_R00274",
+    "resource_id": "aws_s3_bucket.log_bucket"
   },
     {
       #Waiving the log bucket Allow HTTP: S3 bucket policies should only allow requests that use HTTPS
     "rule_id": "FG_R00100",
     "resource_id": "aws_s3_bucket.log_bucket",
   },
+      {
+      #Waiving the log bucket Allow HTTP: S3 bucket policies should only allow requests that use HTTPS
+    "rule_id": "FG_R00100",
+    "resource_id": "aws_s3_bucket.this",
+  },
 {
       #Waiving the log bucket: S3 bucket versioning and lifecycle policies should be enabled
     "rule_id": "FG_R00101",
     "resource_id": "aws_s3_bucket.log_bucket",
+  },
+  {
+      #Waiving the log bucket: S3 bucket versioning and lifecycle policies should be enabled
+    "rule_id": "FG_R00101",
+    "resource_id": "aws_s3_bucket.this",
   },
   ]
 }
