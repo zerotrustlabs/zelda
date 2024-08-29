@@ -48,10 +48,5 @@ rules[rule[_]] {
     "rule_id": "FG_R00354",
     "status": "DISABLED"
   },
-  {
-    #Disabling "S3 bucket policies should only allow requests that use HTTPS
-    "rule_id": "FG_R00100",
-    "status": "DISABLED"
-  },
   ]
 }
