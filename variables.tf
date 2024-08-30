@@ -39,7 +39,7 @@ variable "create_bucket" {
 variable "website_root" {
   type        = string
   description = "Path to the root of website content"
-  default     = "../content"
+  default     = "./content"
 }
 
 variable "file_types" {

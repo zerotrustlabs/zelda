@@ -26,10 +26,12 @@ API GATEWAY SERVERLESS
 https://vinisantos.dev/posts/hands-on-aws-agw-terraform-sls-framework-part-3
 https://github.com/aws-samples/apigateway-deployment-lifecycle-management-terraform/blob/main/main.tf
 https://github.com/aws-samples/apigateway-deployment-lifecycle-management-terraform/blob/main/main.tf
+https://github.com/aws-samples/apigateway-deployment-lifecycle-management-terraform/blob/main/logging.tf
 
 
 AWS OPA
 https://github.com/aws-samples/aws-infra-policy-as-code-with-terraform/blob/main/policy-as-code/OPA/policy/aws/apigateway/aws-apigateway-m-1.rego
+https://github.com/aws-samples/aws-infra-policy-as-code-with-terraform/blob/main/policy-as-code/OPA/policy/common.utils.rego
 https://github.com/aws-samples/aws-infra-policy-as-code-with-terraform/blob/main/policy-as-code/OPA/policy/common.utils.rego
 
 Regula Fugue

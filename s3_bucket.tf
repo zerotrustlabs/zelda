@@ -18,19 +18,19 @@ resource "aws_s3_bucket_versioning" "this" {
   }
 }
 
-resource "aws_s3control_bucket_lifecycle_configuration" "this" {
-  bucket = aws_s3_bucket.this.id
-  rule {
-    expiration {
-      days = 365
-    }
-    filter {
-      prefix = "logs/"
-    }
+# resource "aws_s3control_bucket_lifecycle_configuration" "this" {
+#   bucket = aws_s3_bucket.this.id
+#   rule {
+#     expiration {
+#       days = 365
+#     }
+#     filter {
+#       prefix = "logs/"
+#     }
 
-    id = "logs"
-  }
-}
+#     id = "logs"
+#   }
+# }
 resource "aws_s3_bucket_website_configuration" "s3_bucket" {
   #   count  = local.create_bucket && length(keys(var.website)) > 0 ? 1 : 0
   bucket = aws_s3_bucket.this.id

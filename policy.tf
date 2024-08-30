@@ -83,3 +83,87 @@ EOF
 
 #   # other required fields here
 # }
+
+resource "aws_iam_role_policy" "authenticated_policy" {
+  name = "zerotrustlabs_Cognito_auth_Policy-prod"
+  role = aws_iam_role.authenticated_role.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.this.arn}",
+        "${aws_s3_bucket.this.arn}/*"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "unauthenticated_policy" {
+  name = "zerotrustlabs_Cognito_unauth_Policy_prod"
+  role = aws_iam_role.unauthenticated_role.id
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "mobileanalytics:PutEvents",
+        "cognito-sync:*",
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.this.arn}",
+        "${aws_s3_bucket.this.arn}/*"
+      ]
+    }
+  ]
+}
+EOF
+}
+
+
+resource "aws_cognito_identity_pool_roles_attachment" "roles_attachment" {
+  identity_pool_id = aws_cognito_identity_pool.identity_pool.id
+  roles = {
+    "authenticated"   = aws_iam_role.authenticated_role.arn
+    "unauthenticated" = aws_iam_role.unauthenticated_role.arn
+  }
+}
+
+resource "aws_iam_role_policy" "s3_sse_policy" {
+  name = "S3-server-side-encryption-policy"
+  role = aws_iam_role.authenticated_role.id
+
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Id" : "PutObjectPolicy",
+    "Statement" : [
+      {
+        "Sid" : "RestrictSSECObjectUploads",
+        "Effect" : "Deny",
+        "Action" : "s3:PutObject",
+        "Resource" : "${aws_s3_bucket.this.arn}/*",
+        "Condition" : {
+          "StringNotEquals" : {
+            "s3:x-amz-server-side-encryption" : "AES256"
+          }
+        }
+
+      }
+    ]
+    }
+  )
+}
