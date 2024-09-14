@@ -74,8 +74,22 @@ https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf
 CIS Controls;
 https://www.cisecurity.org/controls
 Regula Fugue
+https://github.com/fugue/regula-action
 https://github.com/fugue/custom-rules/blob/master/advanced/Advanced_AWS.S3_BucketsCloudTrailLogs.rego
 https://github.com/fugue/regula-ci-example/blob/master/infra_tf/main.tf
+
+SYNK Policy Engine:
+https://github.com/snyk/policy-engine/
+https://github.com/snyk/policy-engine/blob/main/examples/03-advanced.rego
+https://github.com/snyk/policy-engine/blob/main/examples/metadata/rules/snyk_007/metadata.json
+SYNK - GITHUBACTIONS
+https://github.com/snyk/actions?tab=readme-ov-file
+ALL RULES
+https://security.snyk.io/rules/cloud/
+https://docs.snyk.io/scm-ide-and-ci-cd-integrations/snyk-ci-cd-integrations/github-actions-for-snyk-setup-and-checking-for-vulnerabilities
+Terraform - Files Test
+https://docs.snyk.io/snyk-cli/scan-and-maintain-projects-using-the-cli/snyk-cli-for-iac/test-your-iac-files/terraform-files
+
 ADVANCED
 https://github.com/fugue/custom-rules/blob/master/old_metadata_format/advanced/Advanced_AWS.MultiResource_AllTaggableResourcesRequireTags.rego
 WAIVER LOGGING RULES - https://github.com/fugue/fugue-scalr-integration/blob/main/waivers.rego

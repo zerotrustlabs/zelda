@@ -16,7 +16,7 @@ resource "aws_wafv2_web_acl" "zelda_cf_waf" {
         }
 
         statement {
-        managed_rule_group_statement {
+            managed_rule_group_statement {
             name        = "AWSManagedRulesACFPRuleSet"
             vendor_name = "AWS"
 
@@ -58,7 +58,27 @@ resource "aws_wafv2_web_acl" "zelda_cf_waf" {
         sampled_requests_enabled   = false
         }
     }
+  rule {
+    name     = "AWSManagedRulesKnownBadInputsRuleSet"
+    priority = 20
 
+    override_action {
+      count {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "AWSManagedRulesKnownBadInputsRuleSetMetric"
+      sampled_requests_enabled   = true
+    }
+  }
     visibility_config {
         cloudwatch_metrics_enabled = false
         metric_name                = "friendly-metric-name"

@@ -58,7 +58,7 @@ resource "aws_s3_bucket_ownership_controls" "waf_logs" {
   }
 }
 resource "aws_s3_bucket_acl" "waf_log_bucket_acl" {
-  bucket     =  aws_s3_bucket.aws-waf-logs-bucket.id
+  bucket     = aws_s3_bucket.aws-waf-logs-bucket.id
   acl        = "log-delivery-write"
   depends_on = [aws_s3_bucket_ownership_controls.waf_logs]
 }

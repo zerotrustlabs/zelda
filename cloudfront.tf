@@ -42,11 +42,11 @@ resource "aws_cloudfront_distribution" "zeld_prod_distribution" {
   viewer_certificate {
     cloudfront_default_certificate = true
   }
-    web_acl_id = aws_wafv2_web_acl.zelda_cf_waf.arn
-    # viewer_certificate {
-    #   acm_certificate_arn = aws_acm_certificate.cert-my-aws-project-com.arn
-    #   ssl_support_method = "sni-only"
-    # }
+  web_acl_id = aws_wafv2_web_acl.zelda_cf_waf.arn
+  # viewer_certificate {
+  #   acm_certificate_arn = aws_acm_certificate.cert-my-aws-project-com.arn
+  #   ssl_support_method = "sni-only"
+  # }
 
   # depends_on = [
   #   aws_acm_certificate.cert-my-aws-project-com,
@@ -71,7 +71,7 @@ resource "aws_s3_bucket_policy" "zelda_prod_cf_bucket_policy" {
           # AWS = "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path}"
           AWS = "${aws_cloudfront_origin_access_identity.origin_access_identity.iam_arn}"
         },
-        Action = "s3:GetObject",
+        Action   = "s3:GetObject",
         Resource = "arn:aws:s3:::${aws_s3_bucket.this.id}/*"
       }
     ]

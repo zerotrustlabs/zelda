@@ -1,0 +1,55 @@
+name: Snyk example
+on: push
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: snyk/actions/setup@master
+      - uses: actions/setup-go@v1
+        with:
+          go-version: '1.19'
+      - name: Snyk test
+        run: snyk test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+          https://docs.snyk.io/scm-ide-and-ci-cd-integrations/snyk-ci-cd-integrations/github-actions-for-snyk-setup-and-checking-for-vulnerabilities
+
+Terraform:
+https://docs.snyk.io/scan-using-snyk/snyk-iac/build-your-own-iac-custom-rules/iac+-and-cloud-custom-rules/create-a-custom-rule#writing-a-custom-rule
+
+Custom Rule:
+
+package rules.NEW_PASSWORD_POLICY
+
+import data.snyk
+
+input_type := "cloud_scan"
+
+metadata := {
+	"id": "NEW_PASSWORD_POLICY",
+	"severity": "high",
+	"title": "Increase the number of characters in our password policy",
+	"description": "All of our password policies now require a minimum of 17 characters instead of the CIS recommendation of 14 characters",
+	"product": ["cloud"],
+}
+
+password_pol := snyk.resources("aws_iam_account_password_policy")[_]
+
+deny[info] {
+	count(password_pol) < 1 
+	info := {
+		"message": "This account does not contain a password policy",
+		"resource": password_pol
+		}
+}
+
+deny[info] {
+	password_pol.minimum_password_length < 17
+	info := {"resource": password_pol}
+}
+
+resources[info] {
+	info := {"resource": password_pol}
+}
