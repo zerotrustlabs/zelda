@@ -1,4 +1,17 @@
 data "aws_caller_identity" "self" {}
+
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}
+
+
+resource "random_string" "suffix" {
+  length = 4
+  lower  = true
+  special = false
+  numeric = false
+  upper = false
+}
 data "aws_iam_policy_document" "s3_access" {
     #   count   = local.create_bucket && local.attach_policy ? 1 : 0
     version = "2012-10-17"

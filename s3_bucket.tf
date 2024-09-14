@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "this" {
   #   count               = local.create_bucket ? 1 : 0
-  bucket              = var.bucket
+  bucket              = local.bucket_name
   bucket_prefix       = var.bucket_prefix
   force_destroy       = var.website_bucket_force_destroy
   object_lock_enabled = var.object_lock_enabled
@@ -89,19 +89,17 @@ resource "aws_s3_bucket_public_access_block" "this" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_object_lock_configuration" "this" {
-  #   count = local.create_bucket && var.object_lock_enabled && try(var.object_lock_configuration.rule.default_retention, null) != null ? 1 : 0
+# resource "aws_s3_bucket_object_lock_configuration" "this" {
 
-  bucket                = aws_s3_bucket.this.id
-  expected_bucket_owner = var.expected_bucket_owner
-  #   token                 = try(var.object_lock_configuration.token, null)
-  rule {
-    default_retention {
-      mode = "COMPLIANCE"
-      days = 5
-    }
-  }
-}
+#   bucket                = aws_s3_bucket.this.id
+#   expected_bucket_owner = var.expected_bucket_owner
+#   rule {
+#     default_retention {
+#       mode = "COMPLIANCE"
+#       days = 5
+#     }
+#   }
+# }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "s3_bucket_server_side_encryption_configuration" {
   bucket = aws_s3_bucket.this.id

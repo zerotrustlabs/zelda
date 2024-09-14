@@ -42,3 +42,11 @@ Creating the Static S3 Bucket
   block_public_policy     = false
   ignore_public_acls      = false
   restrict_public_buckets = false
+
+
+Security Posture: As you build your Zero Trust Security into your architecture, it is equally essential to embed  core Amazon Web Services Security into your SDLC or earlier in the journey into any workload or program, such solutions should align with AWS CloudAdoption Framework, AWS Well-Architect Framework, and AWS Security Best Practices using Security Driven Cloud Acceleration Solution.
+
+The SDCA is a solution built on infrastructure as code templates.
+The goal of SDCA is to help reduce friction for customers to “shift-left and automate” with strong security earlier in their journey. SDCA simplifies improving security posture by applying the minimum AWS security to accelerate a secure-by-design, defense-in-depth strategy across any workload, program or industry solution. 
+SDCA can be used by customers and partners to create a secure landing zone during migrations and/or be secure foundation for cloud native development. By making it easier, faster, and less expensive to automate security posture improvements while embedding this with core workload services, SDCA will further increase customer confidence that AWS is the most secure cloud for innovation.
+Find out more -- https://github.com/aws-samples/security-driven-cloud-acceleration/blob/main/README.md

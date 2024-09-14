@@ -1,5 +1,5 @@
 resource "aws_cognito_user_pool" "user_pool" {
-  name = "zerotrust_users"
+  name = "zerotrust_users-${random_string.suffix.id}"
 
   username_attributes = ["email"]
   username_configuration {
@@ -114,7 +114,7 @@ resource "aws_cognito_user_pool" "user_pool" {
 }
 
 resource "aws_cognito_user_pool_client" "user_pool_client" {
-  name = "zerotrust-cognito-client"
+  name = "zerotrust-cognito-client-${random_string.suffix.id}"
 
   user_pool_id    = aws_cognito_user_pool.user_pool.id
   generate_secret = false
@@ -142,7 +142,7 @@ resource "aws_cognito_user_pool_client" "user_pool_client" {
 }
 
 resource "aws_cognito_identity_pool" "identity_pool" {
-  identity_pool_name               = "zerotrust_identity_pool"
+  identity_pool_name               = "zerotrust_identity_pool-${random_string.suffix.id}"
   allow_unauthenticated_identities = false
 
   cognito_identity_providers {
@@ -152,7 +152,7 @@ resource "aws_cognito_identity_pool" "identity_pool" {
 }
 
 resource "aws_cognito_user_pool_domain" "cognito-domain" {
-  domain       = "zelda-online"
+  domain       = "zelda-online-${random_string.suffix.id}"
   user_pool_id = aws_cognito_user_pool.user_pool.id
 }
 
@@ -182,8 +182,8 @@ resource "aws_cognito_user_in_group" "example" {
 }
 
 resource "aws_cognito_resource_server" "resource" {
-  identifier = "zelda-products"
-  name       = "zelda-products"
+  identifier = "zelda-products-${random_string.suffix.id}"
+  name       = "zelda-products-${random_string.suffix.id}"
 
   scope {
     scope_name        = "read-products"

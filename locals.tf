@@ -15,4 +15,5 @@ locals {
     create_bucket_acl = (var.acl != null && var.acl != "null") || length(local.grants) > 0
     authrole          = "${var.project_prefix}-authrole"
     unauthrole        = "${var.project_prefix}-unauthrole"
+    bucket_name  = "${var.project_prefix}-${random_string.suffix.id}"
 }
